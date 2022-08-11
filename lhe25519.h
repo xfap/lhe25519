@@ -14,7 +14,6 @@
 #include <stdexcept>
 #include <unordered_map>
 #include "curve25519.h"
-#include "test.h"
 
 struct Ciphertext {
     ge_p3 c0;
@@ -69,9 +68,12 @@ struct SecretKey {
     }
 };
 
+std::random_device rd;
+
 void random_bytes(void* data, size_t len) {
     int* alias = (int *)(&data);
-    std::random_device rd;
+    // comment for benchmark cause it produce an error "'std::runtime_error' what():  random_device could not be read".
+    // std::random_device rd;
     for (size_t i = 0; i < len / sizeof(int); ++i)
         alias[i] = rd();
 
